@@ -14,7 +14,7 @@ import java.util.Properties;
  ** 2025, January 14, Tuesday, 11:38 AM
  */
 public class Setup {
-    String fileName = "./src/test/resources/config.properties";
+    static String fileName = "./src/test/resources/config.properties";
     public Properties properties;
 
     @BeforeMethod
@@ -24,7 +24,7 @@ public class Setup {
         properties.load(new FileInputStream(fileName));
     }
 
-    public void setProperties(String key, String value) throws ConfigurationException {
+    public static void setProperties(String key, String value) throws ConfigurationException {
         PropertiesConfiguration propertiesConfiguration = new PropertiesConfiguration(fileName);
         propertiesConfiguration.setProperty(key, value);
         propertiesConfiguration.save();

@@ -1,13 +1,7 @@
 package net.roadtocareer.dailyfinance.model;
 
 import com.github.javafaker.Faker;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,7 +12,7 @@ import java.util.Random;
  ** 2025, January 14, Tuesday, 11:57 AM
  */
 public class UserData {
-    private String id;
+    private String _id;
     private String firstName;
     private String lastName;
     private String email;
@@ -53,8 +47,8 @@ public class UserData {
         this.termsAccepted = termsAccepted;
     }
 
-    public UserData(String id, String firstName, String lastName, String email, String password, String phoneNumber, String address, String gender, boolean termsAccepted, String role, Object profileImage, Object resetPasswordToken, Object resetPasswordExpire, String createdAt, String updatedAt) {
-        this.id = id;
+    public UserData(String _id, String firstName, String lastName, String email, String password, String phoneNumber, String address, String gender, boolean termsAccepted, String role, Object profileImage, Object resetPasswordToken, Object resetPasswordExpire, String createdAt, String updatedAt) {
+        this._id = _id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -62,7 +56,7 @@ public class UserData {
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.gender = gender;
-        this.termsAccepted = termsAccepted;
+        this.termsAccepted = true;
         this.role = "user";
         this.profileImage = null;
         this.resetPasswordToken = null;
@@ -76,6 +70,7 @@ public class UserData {
 
         Faker faker = new Faker();
         String firstName = faker.name().firstName();
+
         userData.setFirstName(firstName);
         String lastName = faker.name().lastName();
         userData.setLastName(lastName);
@@ -91,23 +86,23 @@ public class UserData {
         return userData;
     }
 
-    public UserData update() throws IOException, ParseException {
-        UserData userData = new UserData();
-        JSONObject jsonObject = (JSONObject) new JSONParser().parse(new FileReader("./src/test/resources/user.json"));
+//    public UserData update() throws IOException, ParseException {
+//        UserData userData = new UserData();
+//        JSONObject jsonObject = (JSONObject) new JSONParser().parse(new FileReader("./src/test/resources/user.json"));
+//
+//        userData.setFirstName(jsonObject.get("firstName").toString() + "_updated");
+//        userData.setLastName(jsonObject.get("lastName").toString() + "_updated");
+//        userData.setEmail(jsonObject.get("email").toString());
+//        userData.setPassword(jsonObject.get("password").toString());
+//        userData.setPhoneNumber(jsonObject.get("phoneNumber").toString());
+//        userData.setAddress(jsonObject.get("address").toString());
+//        userData.setGender(jsonObject.get("gender").toString());
+//        userData.setTermsAccepted(this.termsAccepted);
+//
+//        return userData;
+//    }
 
-        userData.setFirstName(jsonObject.get("firstName").toString() + "_updated");
-        userData.setLastName(jsonObject.get("lastName").toString() + "_updated");
-        userData.setEmail(jsonObject.get("email").toString());
-        userData.setPassword(jsonObject.get("password").toString());
-        userData.setPhoneNumber(jsonObject.get("phoneNumber").toString());
-        userData.setAddress(jsonObject.get("address").toString());
-        userData.setGender(jsonObject.get("gender").toString());
-        userData.setTermsAccepted(this.termsAccepted);
-
-        return userData;
-    }
-
-    public void storeAsJson() throws IOException {
+    /*public void setToJson() throws IOException {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("firstName", firstName);
         jsonObject.put("lastName", lastName);
@@ -121,7 +116,23 @@ public class UserData {
         fileWriter.write(jsonObject.toJSONString());
         fileWriter.flush();
         fileWriter.close();
-    }
+    }*/
+
+    /*public UserData getFromJson() throws IOException, ParseException {
+        UserData userData = new UserData();
+
+        JSONObject jsonObject = (JSONObject) new JSONParser().parse(new FileReader("./src/test/resources/user.json"));
+        userData.setFirstName(jsonObject.get("firstName").toString());
+        userData.setLastName(jsonObject.get("lastName").toString());
+        userData.setEmail(jsonObject.get("email").toString());
+        userData.setPassword(jsonObject.get("password").toString());
+        userData.setPhoneNumber(jsonObject.get("phoneNumber").toString());
+        userData.setAddress(jsonObject.get("address").toString());
+        userData.setGender(jsonObject.get("gender").toString());
+        userData.setTermsAccepted(true);
+
+        return userData;
+    }*/
 
     public int generateRandom8Digit() {
         return (int) (Math.random() * (99999999 - 10000000) + 10000000);
@@ -191,12 +202,12 @@ public class UserData {
         this.termsAccepted = termsAccepted;
     }
 
-    public String getId() {
-        return id;
+    public String get_id() {
+        return _id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void set_id(String _id) {
+        this._id = _id;
     }
 
     public String getRole() {
@@ -251,7 +262,7 @@ public class UserData {
     @Override
     public String toString() {
         return "UserData{" +
-                "id='" + id + '\'' +
+                "id='" + _id + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +

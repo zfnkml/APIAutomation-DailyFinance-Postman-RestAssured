@@ -19,16 +19,15 @@ public class AuthController {
         RestAssured.basePath = "/api/auth";
     }
 
-    public Response register() throws IOException {
-        UserData userData = new UserData().generator();
-
+    public Response register(UserData userData) throws IOException {
         Response response = RestAssured
                 .given()
                 .contentType("application/json")
                 .body(userData)
                 .post("/register");
 
-        userData.storeAsJson();
+//        if(response.getStatusCode() == 201)
+//            userData.setToJson();
 
         return response;
     }
