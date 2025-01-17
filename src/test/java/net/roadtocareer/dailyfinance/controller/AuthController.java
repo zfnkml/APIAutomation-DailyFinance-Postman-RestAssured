@@ -26,9 +26,6 @@ public class AuthController {
                 .body(userData)
                 .post("/register");
 
-//        if(response.getStatusCode() == 201)
-//            userData.setToJson();
-
         return response;
     }
 

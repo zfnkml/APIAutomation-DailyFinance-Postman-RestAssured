@@ -29,16 +29,16 @@ public class CostController {
                 .get();
     }
 
-    public Response addItem() {
+    public Response addItem(ItemData itemData) {
         return RestAssured
                 .given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", "Bearer " + properties.getProperty("userToken"))
-                .body(new ItemData().generate())
+                .body(itemData)
                 .post();
     }
 
-    private Response getItemById(String itemId) {
+    public Response getItemById(String itemId) {
         return RestAssured
                 .given()
                 .contentType(ContentType.JSON)
@@ -46,16 +46,10 @@ public class CostController {
                 .get("/" + itemId);
     }
 
-    public Response updateItemById(String itemId) {
-        JsonPath jsonPath = getItemById(itemId).jsonPath();
-        ItemData itemData = new ItemData(
-                jsonPath.get("itemName").toString() + "_updated",
-                Integer.parseInt(jsonPath.get("quantity").toString()) + 1,
-                jsonPath.get("amount").toString(),
-                jsonPath.get("purchaseDate").toString(),
-                jsonPath.get("month").toString(),
-                jsonPath.get("remarks").toString()
-        );
+    public Response updateItemById(String itemId, ItemData itemData) {
+        Response getByItemById = getItemById(itemId);
+        if(getByItemById.statusCode() == 404)
+            return getByItemById;
 
         return RestAssured
                 .given()
@@ -66,6 +60,10 @@ public class CostController {
     }
 
     public Response deleteItemById(String itemId) {
+        Response getByItemById = getItemById(itemId);
+        if(getByItemById.statusCode() == 404)
+            return getByItemById;
+
         return RestAssured
                 .given()
                 .contentType(ContentType.JSON)
